@@ -1,14 +1,13 @@
-// backend/routers/categories.routes.js
+// backend/route/user.route.js
 import express from 'express';
 import UsersController from '../controller/userController.js';
 
 const router = express.Router();
 
 /**
- * Định nghĩa các Routes cho Categories
- * Base URL: /api/categories (sẽ được cấu hình bên server.js)
+ * Định nghĩa các Routes cho Users
  */
-
+    
 // Lấy danh sách (GET /api/user)
 router.get('/', (req, res) => UsersController.getAll(req, res));
 

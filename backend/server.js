@@ -3,19 +3,23 @@ import express from "express";
 import cors from "cors";       
 import dotenv from "dotenv";
 import { connectDatabase } from "./config/database.js";
-
 import userRoutes from "./route/user.route.js";
+
+dotenv.config(); // Load biến môi trường 
 
 const app = express(); 
 const PORT = process.env.PORT || 3000; 
 
-app.use(cors());
+app.use(cors({ 
+  origin: 'http://localhost:5173',
+  credentials: true 
+})); ////kết nối tới frontend (sử dụng vite ) TODO: đổi port khi deploy
 app.use(express.json()); 
 
 //route
-app.use("/api/user", userRoutes);
+app.use('/api/user', userRoutes);
 
-// Khởi động server sau khi kết nối Database thành công
+
 const startServer = async () => {
   await connectDatabase();
 

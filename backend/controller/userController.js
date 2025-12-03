@@ -11,7 +11,7 @@ class UsersController {
     try {
 
       const data = await UsersService.getUsers();
-      
+        console.log("Fetched users:", data);
       return res.status(200).json({
         success: true,
         data: data

@@ -1,5 +1,6 @@
 import UserRepository from "../repository/UsersRepository.js";
 import {hashPassword} from "../helpers/hashingPassword.js";
+import { isValidEmail } from "../helpers/validationHelper.js";
 
 class UsersService {
   
@@ -16,6 +17,7 @@ class UsersService {
   async createUser({  email, password, createdAt = new Date(Date.now()) }) {
     //valid dữ liệu
     if (!email || email.trim() === "") throw new Error("email is required");
+    if (!isValidEmail(email.trim())) throw new Error("email is not valid");
     if (!password || password.trim() === "") throw new Error("password is required");
     if (password.trim().length < 6) {
         throw new Error("password must be at least 6 characters long");
@@ -71,11 +73,12 @@ class UsersService {
     await this.getUserById(id);
 
     // 2. Nếu cập nhật tên, cần check trùng lặp (Optional - tuỳ độ kỹ tính)
-    if (updates.name) {
+    if (updates.email) {
+      if (!isValidEmail(updates.email.trim())) throw new Error("email is not valid");
        const existing = await UserRepository.findByEmail(updates.email.trim());
-       const isDuplicate = existing.some(user => user.id !== id && user.name.toLowerCase() === updates.name.trim().toLowerCase());
+       const isDuplicate = existing.some(user => user.id !== id && user.email.toLowerCase() === updates.email.trim().toLowerCase());
        if (isDuplicate) {
-         throw new Error(`User name '${updates.name}' already exists`);
+         throw new Error(`User email '${updates.email}' already exists`);
        }
     }
 
