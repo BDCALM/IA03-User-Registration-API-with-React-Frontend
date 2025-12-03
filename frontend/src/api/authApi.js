@@ -9,12 +9,12 @@ const apiClient = axios.create({
 
 export const authApi = {
   register: async (data) => {
-    const response = await apiClient.post('/user/register', data);
+    const response = await apiClient.post('/api/user/register', data);
     return response.data;
-  },
+  },  
   // 
   login: async (data) => {
-    const response = await apiClient.post('/user/login', data);
+    const response = await apiClient.post('/api/user/login', data);
     return response.data;
   }
 };
